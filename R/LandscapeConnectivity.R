@@ -17,10 +17,10 @@ writeRaster(project.area.empty.raster, 'GIS/ProjectArea.tif', overwrite=TRUE)
 # load our focal nodes from a shape file (vector) we created in QGIS
 # these are where we believe our species are in relatively high numbers
 focalNodes = readShapeSpatial('GIS/FocalNodes.shp')
-plot(sourceAreas, add=T)
+plot(focalNodes, add=T)
 
 # now we rasterize our vector layer
-focalNodes.raster = rasterize(sourceAreas, project.area.empty.raster)
+focalNodes.raster = rasterize(focalNodes, project.area.empty.raster)
 plot(focalNodes.raster)
 writeRaster(focalNodes.raster, 'GIS/FocalNodes.tif', NAflag=-1, overwrite=T)
 
@@ -39,7 +39,7 @@ plot(resistances.raster)
 # now combine the resistance and impassible layers
 # since our rasters have the same extents, resolution, and coordinate system, we can
 # assign values using indexing
-resistances.raster[!is.na(impassibleAreas.raster)] = impassibleAreas.raster[!is.na(impassibleAreas.raster)]
+resistances.raster[!is.na(impassibleAreas.raster)] = -1
 plot(resistances.raster)
 
 # and save out our resistances tif

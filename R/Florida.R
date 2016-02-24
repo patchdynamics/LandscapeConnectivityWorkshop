@@ -1,9 +1,12 @@
 nlcd.downsampled = raster('GIS-Florida/NLCD_Florida_240.tif')
 
+# create empty version of the grid system of this raster
 project.empty = raster(extent(nlcd.downsampled))
 crs(project.empty) = crs(nlcd.downsampled)
 res(project.empty) = res(nlcd.downsampled)
 
+# reclassify the raster
+# values are at http://www.mrlc.gov/nlcd06_leg.php
 reclassification = c(0, NA,
                      11, -1,    # water
                      41, 20,   # deciduous forests
